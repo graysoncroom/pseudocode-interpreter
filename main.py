@@ -27,13 +27,22 @@ print = my_print
 
 @app.route('/', methods=['POST'])
 def index():
-    my_code = request.get_json()['code']
-    result = execute_python(my_code)
+    my_pseudocode = request.get_json()['code']
+    my_python_code = translate_pseudocode_to_python(my_pseudocode)
     
-    # cleanup
-    os.remove('python_code_output.txt')
+    result = execute_python(my_python_code)
+    
+    os.remove('python_code_output.txt') # cleanup
     
     return result
+
+# Description: Takes a string of @pseudocode and outputs a properly formatted string of python
+# Params:
+#    @pseudocode
+#        -> Type: String
+#        -> Format: No hard format requirements! (as that's kinda the point of the project lol)
+def translate_pseudocode_to_python(pseudocode):
+    return pseudocode # TODO: Actually implement translation rather than returning input
 
 # Description: execute_python will execute @python_code and return anything printed by @python_code
 # Params:
